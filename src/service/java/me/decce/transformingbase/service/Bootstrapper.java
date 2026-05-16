@@ -20,6 +20,10 @@ import java.util.Objects;
 /*import me.decce.transformingbase.service.neoforge.transformers.DisplayWindowTransformer;
 import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
 *///? }
+//? forge {
+/*import me.decce.transformingbase.service.forge.transformers.RenderElementTransformer;
+import me.decce.transformingbase.service.forge.transformers.DisplayWindowTransformer;
+*///? }
 
 public class Bootstrapper {
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_NAME);
@@ -44,6 +48,10 @@ public class Bootstrapper {
                 //? if neoforge {
                 /*, new TransformerDefinition("net.neoforged.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
                 , new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
+                *///? }
+                //? if forge {
+                /*, new TransformerDefinition("net.minecraftforge.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
+                , new TransformerDefinition("net.minecraftforge.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
                 *///? }
         );
 
