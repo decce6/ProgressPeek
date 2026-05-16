@@ -2,7 +2,6 @@ package me.decce.progresspeek.mixins;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.multiplayer.LevelLoadTracker;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,8 +17,12 @@ public class LevelLoadingScreenMixin {
     @Shadow
     private float smoothedProgress;
 
+    //? <=1.21.11 {
     @Inject(method = "render", at = @At("RETURN"))
-    private void progresspeek$updateProgress(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
+    //? } else {
+    /*@Inject(method = "extractRenderState", at = @At("RETURN"))
+    *///? }
+    private void progresspeek$updateProgress(CallbackInfo ci) {
         if (this.loadTracker.hasProgress()) {
             ProgressPeekCore.setStatus(ProgressStatus.NORMAL);
             ProgressPeekCore.setValue(this.smoothedProgress);

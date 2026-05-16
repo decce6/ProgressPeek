@@ -16,7 +16,11 @@ public class LoadingOverlayMixin {
     @Shadow
     private float currentProgress;
 
+    //? <=1.21.11 {
     @Inject(method = "render", at = @At("RETURN"))
+    //? } else {
+    /*@Inject(method = "extractRenderState", at = @At("RETURN"))
+    *///? }
     private void progresspeek$updateProgress(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         //noinspection ConstantValue
         if (this == (Object) Minecraft.getInstance().getOverlay()) {

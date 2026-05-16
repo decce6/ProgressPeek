@@ -19,7 +19,7 @@ public class WindowMixin {
     private long handle;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void progresspeek$initWindow(WindowEventHandler windowEventHandler, ScreenManager screenManager, DisplayData displayData, String string, String string2, CallbackInfo ci) {
+    private void progresspeek$initWindow(CallbackInfo ci) {
         ProgressPeekCore.init(this.handle);
     }
 }

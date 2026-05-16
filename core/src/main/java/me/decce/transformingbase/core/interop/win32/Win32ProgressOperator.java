@@ -23,12 +23,15 @@ public class Win32ProgressOperator implements ProgressOperator {
 
     @Override
     public void initialize(long glfwWindow) {
-        if (initialized || unsupported) {
+        if (unsupported) {
             return;
         }
         hWnd = GLFWNativeWin32.glfwGetWin32Window(glfwWindow);
         if (hWnd == 0) {
             throw new IllegalStateException("hWnd is null!");
+        }
+        if (initialized) {
+            return;
         }
         Ole32.CoInitialize(0);
         try (var stack = MemoryStack.stackPush()) {

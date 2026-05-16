@@ -16,6 +16,11 @@ import java.nio.file.Paths;
 import java.security.CodeSource;
 import java.util.Objects;
 
+//? neoforge {
+/*import me.decce.transformingbase.service.neoforge.transformers.DisplayWindowTransformer;
+import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
+*///? }
+
 public class Bootstrapper {
     public static final Logger LOGGER = LogManager.getLogger(Constants.MOD_NAME);
     private static boolean bootstrapped;
@@ -32,13 +37,14 @@ public class Bootstrapper {
 
         var helper = new TransformationHelper(classLoaderHandler.targetClassLoader, classLoaderHandler.modClassLoader);
 
-        var openglModule = org.lwjgl.opengl.AMDPinnedMemory.class.getModule();
-        helper.expandModuleReads(openglModule);
-
         helper.setup(getInstrumentation(), true, false
                 //? if fabric {
                 , new TransformerDefinition("net.fabricmc.loader.impl.launch.knot.KnotClassDelegate", me.decce.transformingbase.service.fabric.KnotClassDelegateTransformer.class)
                 //?}
+                //? if neoforge {
+                /*, new TransformerDefinition("net.neoforged.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
+                , new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
+                *///? }
         );
 
         classLoaderHandler.close();
