@@ -32,6 +32,6 @@ public class LevelLoadingScreenMixin {
 
     @Inject(method = "onClose", at = @At("HEAD"))
     private void progresspeek$endProgress(CallbackInfo ci) {
-        ProgressPeekCore.transitionToNoProgress();
+        ProgressPeekCore.transitionToNoProgress(true);
     }
 }

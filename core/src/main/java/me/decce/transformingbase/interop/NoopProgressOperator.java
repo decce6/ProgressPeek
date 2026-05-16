@@ -19,7 +19,7 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void transitionToNoProgress() {
+    public void transitionToNoProgress(boolean notify) {
 
     }
 }

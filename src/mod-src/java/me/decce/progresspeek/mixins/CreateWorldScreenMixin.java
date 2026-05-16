@@ -17,6 +17,6 @@ public class CreateWorldScreenMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void progresspeek$endProgress(CallbackInfo ci) {
-        ProgressPeekCore.transitionToNoProgress();
+        ProgressPeekCore.transitionToNoProgress(false);
     }
 }

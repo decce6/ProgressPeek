@@ -26,7 +26,7 @@ public class ProgressPeekCore {
         setValue((int) (value * 100));
     }
 
-    public static void transitionToNoProgress() {
-        operator.transitionToNoProgress();
+    public static void transitionToNoProgress(boolean notify) {
+        operator.transitionToNoProgress(notify);
     }
 }

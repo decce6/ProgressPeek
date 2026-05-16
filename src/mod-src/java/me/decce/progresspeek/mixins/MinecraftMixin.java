@@ -17,7 +17,7 @@ public class MinecraftMixin {
     @Inject(method = "setOverlay", at = @At("RETURN"))
     private void progresspeek$setOverlay(Overlay overlay, CallbackInfo ci) {
         if (overlay == null) {
-            ProgressPeekCore.transitionToNoProgress();
+            ProgressPeekCore.transitionToNoProgress(true);
         }
     }
 
@@ -25,6 +25,6 @@ public class MinecraftMixin {
     public void progresspeek$disconnect(Screen screen, boolean keepResourcePacks, boolean stopSound, Operation<Void> original) {
         ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
         original.call(screen, keepResourcePacks, stopSound);
-        ProgressPeekCore.transitionToNoProgress();
+        ProgressPeekCore.transitionToNoProgress(true);
     }
 }
