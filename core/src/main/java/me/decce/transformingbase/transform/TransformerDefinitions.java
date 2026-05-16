@@ -1,9 +1,7 @@
 package me.decce.transformingbase.transform;
 
-import me.decce.transformingbase.transform.transformers.GL11CTransformer;
-
 public enum TransformerDefinitions {
-    GL11C("org.lwjgl.opengl.GL11C", GL11CTransformer.class);
+    ;
 
     public final TransformerDefinition definition;
 

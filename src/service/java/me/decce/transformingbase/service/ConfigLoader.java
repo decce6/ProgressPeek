@@ -3,7 +3,7 @@ package me.decce.transformingbase.service;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.toml.TomlFormat;
 import me.decce.transformingbase.constants.Constants;
-import me.decce.transformingbase.core.ExampleModConfig;
+import me.decce.transformingbase.core.ProgressPeekConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,7 +36,7 @@ public class ConfigLoader {
                 .build();
     }
 
-    public static void save(ExampleModConfig config) {
+    public static void save(ProgressPeekConfig config) {
         try (var night = toNightConfig(config)) {
             night.save();
         } catch (Exception e) {
@@ -44,11 +44,11 @@ public class ConfigLoader {
         }
     }
 
-    public static ExampleModConfig load() {
+    public static ProgressPeekConfig load() {
         return loadConfig();
     }
 
-    private static ExampleModConfig loadConfig() {
+    private static ProgressPeekConfig loadConfig() {
         if (CONFIG_FILE.toFile().exists()) {
             try {
                 return fromNightConfig();
@@ -56,20 +56,20 @@ public class ConfigLoader {
                 LOGGER.error("Failed to read configuration!", e);
             }
         }
-        return new ExampleModConfig();
+        return new ProgressPeekConfig();
     }
 
-    private static CommentedFileConfig toNightConfig(ExampleModConfig config) {
+    private static CommentedFileConfig toNightConfig(ProgressPeekConfig config) {
         var night = makeNightConfig();
         try {
-            for (Field field : ExampleModConfig.class.getDeclaredFields()) {
+            for (Field field : ProgressPeekConfig.class.getDeclaredFields()) {
                 var modifiers = field.getModifiers();
                 if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers) || Modifier.isFinal(modifiers)) {
                     continue;
                 }
                 night.set(field.getName(), field.get(config));
-                if (field.isAnnotationPresent(ExampleModConfig.Comment.class)) {
-                    night.setComment(field.getName(), field.getAnnotation(ExampleModConfig.Comment.class).value());
+                if (field.isAnnotationPresent(ProgressPeekConfig.Comment.class)) {
+                    night.setComment(field.getName(), field.getAnnotation(ProgressPeekConfig.Comment.class).value());
                 }
             }
         } catch (Exception e) {
@@ -78,11 +78,11 @@ public class ConfigLoader {
         return night;
     }
 
-    private static ExampleModConfig fromNightConfig() {
-        var config = new ExampleModConfig();
+    private static ProgressPeekConfig fromNightConfig() {
+        var config = new ProgressPeekConfig();
         try (var night = makeNightConfig()) {
             night.load();
-            for (Field field : ExampleModConfig.class.getDeclaredFields()) {
+            for (Field field : ProgressPeekConfig.class.getDeclaredFields()) {
                 var modifiers = field.getModifiers();
                 if (Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers) || Modifier.isFinal(modifiers)) {
                     continue;

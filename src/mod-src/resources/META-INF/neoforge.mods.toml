@@ -13,6 +13,9 @@ license = "${mod_license}"
     modId = "${modid}"
     version = "${mod_version_full}"
 
+[[mixins]]
+config = "progresspeek.mixins.json"
+
 [[dependencies.${modid}]]
     modId = "neoforge"
     type = "required"

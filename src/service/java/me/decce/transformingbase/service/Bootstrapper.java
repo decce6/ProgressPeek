@@ -35,7 +35,7 @@ public class Bootstrapper {
         var openglModule = org.lwjgl.opengl.AMDPinnedMemory.class.getModule();
         helper.expandModuleReads(openglModule);
 
-        helper.setup(getInstrumentation(), false, true
+        helper.setup(getInstrumentation(), true, false
                 //? if fabric {
                 , new TransformerDefinition("net.fabricmc.loader.impl.launch.knot.KnotClassDelegate", me.decce.transformingbase.service.fabric.KnotClassDelegateTransformer.class)
                 //?}

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal", "unused"})
-public class ExampleModConfig {
+public class ProgressPeekConfig {
     @Comment("Specifies whether to enable the mod")
     public boolean enabled = true;
 

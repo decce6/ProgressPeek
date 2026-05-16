@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.decce.progresspeek.mixins",
+  "minVersion": "0.8",
+  "client": [
+    "CreateWorldScreenMixin",
+    "LevelLoadingScreenMixin",
+    "LoadingOverlayMixin",
+    "MinecraftMixin",
+    "WindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

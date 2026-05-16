@@ -1,6 +1,6 @@
 package me.decce.transformingbase.service;
 
-import me.decce.transformingbase.core.ExampleCore;
+import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.LibraryAccessor;
 import org.apache.logging.log4j.Logger;
 
@@ -13,8 +13,8 @@ public class PostBootstrapper {
     }
 
     private static void initConfig() {
-        ExampleCore.config = ConfigLoader.load();
-        ConfigLoader.save(ExampleCore.config);
+        ProgressPeekCore.config = ConfigLoader.load();
+        ConfigLoader.save(ProgressPeekCore.config);
     }
 
     private static void initMethodHandles() {

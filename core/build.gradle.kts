@@ -42,9 +42,9 @@ dependencies {
     // compileOnly ("cpw.mods:securejarhandler:2.1.10")
     compileOnly ("net.minecraftforge:securemodules:2.2.21")
 
-    compileOnly ("org.lwjgl:lwjgl:3.3.1")
-    compileOnly ("org.lwjgl:lwjgl-glfw:3.3.1")
-    compileOnly ("org.lwjgl:lwjgl-opengl:3.3.1")
+    compileOnly ("org.lwjgl:lwjgl:3.3.6")
+    compileOnly ("org.lwjgl:lwjgl-glfw:3.3.6")
+    compileOnly ("org.lwjgl:lwjgl-opengl:3.3.6")
 }
 
 tasks {

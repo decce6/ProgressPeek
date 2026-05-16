@@ -14,6 +14,7 @@
   },
   "license": "${mod_license}",
   "icon": "${modid}.png",
+  "environment": "client",
   "entrypoints": {
     "preLaunch": [
       "me.decce.${modid}.service.fabric.FabricPreLaunchEntrypoint"
@@ -25,5 +26,11 @@
   "depends": {
     "minecraft": "${minecraft_supported_fabric}",
     "fabricloader": ">=0.16.0"
-  }
+  },
+  "mixins": [
+    {
+      "config": "progresspeek.mixins.json",
+      "environment": "client"
+    }
+  ]
 }

@@ -6,6 +6,11 @@ stonecutter active "1.21.11-fabric"
 
 stonecutter parameters {
     constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge", "forge")
+    replacements.string(current.parsed >= "26.1") {
+        replace("GuiGraphics", "GuiGraphicsExtractor")
+        replace("\"render\"", "\"extractRenderState\"")
+        replace("net.minecraft.client.gui.render.state", "net.minecraft.client.renderer.state.gui")
+    }
 }
 
 tasks.register("publishAll") {
