@@ -1,8 +1,8 @@
-package me.decce.transformingbase.interop.win32;
+package me.decce.transformingbase.core.interop.win32;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
-import me.decce.transformingbase.interop.ProgressOperator;
+import me.decce.transformingbase.core.interop.ProgressOperator;
 import org.lwjgl.glfw.GLFWNativeWin32;
 import org.lwjgl.system.MemoryStack;
 

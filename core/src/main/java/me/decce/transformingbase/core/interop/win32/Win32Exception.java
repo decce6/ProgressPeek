@@ -1,4 +1,4 @@
-package me.decce.transformingbase.interop.win32;
+package me.decce.transformingbase.core.interop.win32;
 
 public class Win32Exception extends RuntimeException {
     public Win32Exception(int errorCode) {

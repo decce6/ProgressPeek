@@ -1,8 +1,8 @@
-package me.decce.transformingbase.interop;
+package me.decce.transformingbase.core.interop;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
-import me.decce.transformingbase.interop.win32.Win32ProgressOperator;
+import me.decce.transformingbase.core.interop.win32.Win32ProgressOperator;
 import org.lwjgl.system.Platform;
 
 public interface ProgressOperator {

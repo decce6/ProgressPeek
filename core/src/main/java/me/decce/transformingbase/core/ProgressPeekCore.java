@@ -1,6 +1,6 @@
 package me.decce.transformingbase.core;
 
-import me.decce.transformingbase.interop.ProgressOperator;
+import me.decce.transformingbase.core.interop.ProgressOperator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

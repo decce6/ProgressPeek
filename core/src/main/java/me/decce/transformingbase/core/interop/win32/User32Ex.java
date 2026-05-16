@@ -1,4 +1,4 @@
-package me.decce.transformingbase.interop.win32;
+package me.decce.transformingbase.core.interop.win32;
 
 import org.lwjgl.system.APIUtil;
 import org.lwjgl.system.NativeType;

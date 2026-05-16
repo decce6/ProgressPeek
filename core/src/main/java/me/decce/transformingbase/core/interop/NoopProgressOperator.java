@@ -1,4 +1,4 @@
-package me.decce.transformingbase.interop;
+package me.decce.transformingbase.core.interop;
 
 import me.decce.transformingbase.core.ProgressStatus;
 

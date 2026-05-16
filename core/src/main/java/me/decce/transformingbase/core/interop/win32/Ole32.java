@@ -3,7 +3,7 @@
  * License terms: https://www.lwjgl.org/license
  * MACHINE GENERATED FILE, DO NOT EDIT
  */
-package me.decce.transformingbase.interop.win32;
+package me.decce.transformingbase.core.interop.win32;
 
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.*;
