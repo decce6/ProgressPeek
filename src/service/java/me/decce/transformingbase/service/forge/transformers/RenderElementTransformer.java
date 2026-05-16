@@ -3,6 +3,7 @@ package me.decce.transformingbase.service.forge.transformers;
 //? forge {
 /*import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
+import net.lenni0451.classtransform.annotations.CInline;
 import net.lenni0451.classtransform.annotations.CTarget;
 import net.lenni0451.classtransform.annotations.CTransformer;
 import net.lenni0451.classtransform.annotations.injection.CInject;
@@ -12,9 +13,9 @@ import net.minecraftforge.fml.loading.progress.ProgressMeter;
 
 import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
 @CTransformer(RenderElement.class)
 public class RenderElementTransformer {
+    @CInline
     @CModifyExpressionValue(method = "startupProgressBars", target = @CTarget(value = "INVOKE", target = "Lnet/minecraftforge/fml/loading/progress/StartupNotificationManager;getCurrentProgress()Ljava/util/List;"))
     private static List<ProgressMeter> progresspeek$updateProgress(List<ProgressMeter> list) {
         // Avoid calling StartupNotificationManager$getCurrentProgress again because it involves synchronization

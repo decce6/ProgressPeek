@@ -2,6 +2,7 @@ package me.decce.transformingbase.service.forge.transformers;
 
 //? forge {
 /*import me.decce.transformingbase.core.ProgressPeekCore;
+import net.lenni0451.classtransform.annotations.CInline;
 import net.lenni0451.classtransform.annotations.CShadow;
 import net.lenni0451.classtransform.annotations.CTarget;
 import net.lenni0451.classtransform.annotations.CTransformer;
@@ -13,7 +14,10 @@ public class DisplayWindowTransformer {
     @CShadow
     private long window;
 
-    @CInject(method = "initWindow", target = @CTarget("RETURN"))
+    // Inject into periodicTick instead of initWindow because, if running on an older version of Forge, our
+    // ImmediateWindowProvider wouldn't run, meaning our transformations would happen *after* initWindow finishes.
+    @CInline
+    @CInject(method = "periodicTick", target = @CTarget("RETURN"))
     private void progresspeek$initialize() {
         ProgressPeekCore.init(window);
     }
