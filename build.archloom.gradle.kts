@@ -16,6 +16,14 @@ val modSourceSet = sourceSets["mod-src"]
 // Need to shadow MixinExtras in <1.18.2
 val jijMixinExtras = stonecutter.eval(stonecutter.current.version, ">=1.18.2")
 
+loom {
+    mixin {
+        add (modSourceSet)
+        useLegacyMixinAp = false
+    }
+    createRemapConfigurations(modSourceSet)
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:${prop("deps.minecraft")}")
     mappings(loom.officialMojangMappings())
@@ -32,10 +40,12 @@ dependencies {
     }
 }
 
-val modJar = tasks.register<Jar>("modJar") {
+val modJar = tasks.register<ShadowJar>("modJar") {
     from(modSourceSet.output)
     archiveFileName = "$modid-forge-mod.jar"
+    relocate("me.decce.transformingbase", "me.decce.$modid")
     manifest.attributes (
+        "MixinConfigs" to "$modid.mixins.json",
         "Automatic-Module-Name" to "me.decce.$modid"
     )
 
@@ -58,7 +68,6 @@ tasks {
         inputFile = shadowJar.flatMap { it.archiveFile }
         archiveClassifier = ""
         manifest.attributes (
-            "MixinConfigs" to "$modid.mixins.json",
             "Launcher-Agent-Class" to "me.decce.$modid.instrumentation.AgentMain",
             "Can-Redefine-Classes" to "true",
             "Can-Retransform-Classes" to "true",
