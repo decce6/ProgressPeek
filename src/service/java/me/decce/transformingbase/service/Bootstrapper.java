@@ -19,10 +19,10 @@ import java.util.Objects;
 //? neoforge {
 /*import me.decce.transformingbase.service.neoforge.transformers.DisplayWindowTransformer;
 //? >=1.21.11 {
-/^import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
-^///? } else {
-import me.decce.transformingbase.service.neoforge.transformers.RenderElementTransformer;
-//? }
+import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
+//? } else {
+/^import me.decce.transformingbase.service.neoforge.transformers.RenderElementTransformer;
+^///? }
 *///? }
 //? forge {
 /*import me.decce.transformingbase.service.forge.transformers.RenderElementTransformer;
@@ -52,10 +52,10 @@ public class Bootstrapper {
                 //? if neoforge {
                 /^, new TransformerDefinition("net.neoforged.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
                 //? >=1.21.11 {
-                /^¹, new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
-                ¹^///? } else {
-                , new TransformerDefinition("net.neoforged.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
-                //? }
+                , new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
+                //? } else {
+                /^¹, new TransformerDefinition("net.neoforged.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
+                ¹^///? }
                 ^///? }
                 //? if forge {
                 /^, new TransformerDefinition("net.minecraftforge.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)

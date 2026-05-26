@@ -21,7 +21,7 @@ public class MinecraftMixin {
         }
     }
 
-    //? >=1.21.1 {
+    //? >=1.21.10 {
     @WrapMethod(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V")
     public void progresspeek$disconnect(Screen screen, boolean keepResourcePacks, boolean stopSound, Operation<Void> original) {
         ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);

@@ -15,7 +15,7 @@ import java.util.List;
 @SuppressWarnings("UnstableApiUsage")
 @CTransformer(RenderElement.class)
 public class RenderElementTransformer {
-    @CModifyExpressionValue(method = "startupProgressBars", target = @CTarget(value = "INVOKE", target = "Lnet/minecraftforge/fml/loading/progress/StartupNotificationManager;getCurrentProgress()Ljava/util/List;"))
+    @CModifyExpressionValue(method = "startupProgressBars", target = @CTarget(value = "INVOKE", target = "Lnet/neoforged/fml/loading/progress/StartupNotificationManager;getCurrentProgress()Ljava/util/List;"))
     private static List<ProgressMeter> progresspeek$updateProgress(List<ProgressMeter> list) {
         // Avoid calling StartupNotificationManager$getCurrentProgress again because it involves synchronization
         if (list.size() > 0) {
