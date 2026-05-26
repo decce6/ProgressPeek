@@ -66,27 +66,36 @@ public class DBusProgressOperator implements ProgressOperator {
     @Override
     public void initialize(long glfwWindow) {
         if (!desktopFileGenerated) {
-            throw new IllegalStateException("preInitialize was not called before initialize!");
+            preInitialize();
         }
         if (this.glfwWindow != glfwWindow) {
             this.glfwWindow = glfwWindow;
-            thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
+            // The thread might not have been initialized at this point, if on an older version of Forge which does not load ImmediateWindowProvider from mods
+            if (thread != null) {
+                thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
+            }
         }
     }
 
     @Override
     public void setStatus(ProgressStatus status) {
-        thread.set(status);
+        if (thread != null) {
+            thread.set(status);
+        }
     }
 
     @Override
     public void setValue(int percentage) {
-        thread.set(percentage);
+        if (thread != null) {
+            thread.set(percentage);
+        }
     }
 
     @Override
     public void requestAttention() {
-        GLFW.glfwRequestWindowAttention(this.glfwWindow);
+        if (this.glfwWindow != 0L) {
+            GLFW.glfwRequestWindowAttention(this.glfwWindow);
+        }
     }
 
     private String getAppName() {
