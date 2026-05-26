@@ -15,7 +15,7 @@ public class DisplayWindowTransformer {
     private long window;
 
     @CInline
-    @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"))
+    @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J", shift = CTarget.Shift.BEFORE))
     private void progresspeek$preInit() {
         ProgressPeekCore.preInit();
     }
