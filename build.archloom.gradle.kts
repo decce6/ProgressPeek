@@ -42,13 +42,18 @@ dependencies {
 
 val modJar = tasks.register<ShadowJar>("modJar") {
     from(modSourceSet.output)
-    archiveFileName = "$modid-forge-mod.jar"
+    archiveClassifier = "mod"
     relocate("me.decce.transformingbase", "me.decce.$modid")
     manifest.attributes (
         "MixinConfigs" to "$modid.mixins.json",
         "Automatic-Module-Name" to "me.decce.$modid"
     )
+}
 
+val remapModJar = tasks.register<RemapJarTask>("remapModJar") {
+    dependsOn(modJar)
+    inputFile = modJar.flatMap { it.archiveFile }
+    archiveFileName = "$modid-forge-mod.jar"
 }
 
 tasks {
@@ -60,7 +65,7 @@ tasks {
         if (!jijMixinExtras) {
             relocate("com.llamalad7.mixinextras", "me.decce.$modid)}.shadow.mixinextras")
         }
-        from(files(modJar))
+        from(files(remapModJar))
     }
 
     named<RemapJarTask>("remapJar") {
