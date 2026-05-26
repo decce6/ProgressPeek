@@ -21,7 +21,7 @@ repositories {
     }
     maven {
         name="lenni0451"
-        url = uri("https://maven.lenni0451.net/snapshots")
+        url = uri("https://maven.lenni0451.net/releases")
     }
 }
 
@@ -29,7 +29,7 @@ val shade = configurations.create("shade")
 configurations.implementation.get().extendsFrom(shade)
 
 dependencies {
-    shade ("net.lenni0451.classtransform:core:1.15.0-SNAPSHOT") {
+    shade ("net.lenni0451.classtransform:core:1.15.0") {
         isTransitive = false
     }
     //shade ("org.ow2.asm:asm:9.9.1")

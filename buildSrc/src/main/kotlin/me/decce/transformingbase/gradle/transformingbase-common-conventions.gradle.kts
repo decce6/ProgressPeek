@@ -50,7 +50,7 @@ dependencies {
     shade("me.decce.transformingbase:core") {
         isTransitive = false
     }
-    shade("net.lenni0451.classtransform:core:1.15.0-SNAPSHOT") {
+    shade("net.lenni0451.classtransform:core:1.15.0") {
         isTransitive = false
     }
     shade("net.lenni0451:Reflect:1.6.2")
@@ -111,7 +111,7 @@ repositories {
     exclusiveMaven("Sponge", "org.spongepowered", "https://repo.spongepowered.org/repository/maven-public")
     maven {
         name = "lenni0451"
-        url = uri("https://maven.lenni0451.net/snapshots")
+        url = uri("https://maven.lenni0451.net/releases")
     }
 }
 
