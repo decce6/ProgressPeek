@@ -106,7 +106,7 @@ public class DBusCommunicationThread extends Thread {
     }
 
     public void set(ProgressStatus status) {
-        this.set(status, status == ProgressStatus.INDETERMINATE ? 0 : this.value);
+        this.set(status, this.value);
     }
 
     public void set(int value) {
@@ -120,7 +120,10 @@ public class DBusCommunicationThread extends Thread {
     public void set(ProgressStatus status, int value, boolean force) {
         if (this.status != status || this.value != value || force) {
             this.status = status;
-            if (status != ProgressStatus.INDETERMINATE) {
+            if (status == ProgressStatus.INDETERMINATE && currentStatus != ProgressStatus.INDETERMINATE) {
+                this.value = 0;
+            }
+            else {
                 this.value = value;
             }
 

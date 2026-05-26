@@ -68,9 +68,10 @@ public class DBusProgressOperator implements ProgressOperator {
         if (!desktopFileGenerated) {
             throw new IllegalStateException("preInitialize was not called before initialize!");
         }
-        this.glfwWindow = glfwWindow;
-
-        thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
+        if (this.glfwWindow != glfwWindow) {
+            this.glfwWindow = glfwWindow;
+            thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
+        }
     }
 
     @Override
