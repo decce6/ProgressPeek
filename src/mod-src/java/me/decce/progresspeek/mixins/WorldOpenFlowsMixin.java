@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldOpenFlows.class)
 public class WorldOpenFlowsMixin {
+    //? >=1.21.1 {
     @Inject(method = "openWorldLoadLevelStem", at = @At("HEAD"))
     private void progresspeek$openWorldLoadLevelStem(CallbackInfo ci) {
         ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
@@ -21,4 +22,5 @@ public class WorldOpenFlowsMixin {
     private void progresspeek$openWorldLoadLevelStem$1(CallbackInfo ci) {
         ProgressPeekCore.transitionToNoProgress(false);
     }
+    //? }
 }
