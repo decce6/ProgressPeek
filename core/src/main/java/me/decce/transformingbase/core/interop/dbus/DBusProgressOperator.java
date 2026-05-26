@@ -22,33 +22,11 @@ public class DBusProgressOperator implements ProgressOperator {
     public static final String DEFAULT_APP_NAME = "Minecraft with ProgressPeek";
     public static final String DEFAULT_CLASS_NAME = "me.decce.progresspeek";
 
-    public static final NativeString S_INTERFACE = new NativeString("com.canonical.Unity.LauncherEntry");
-    public static final NativeString S_SIGNAL = new NativeString("Update");
-    public static final NativeString S_SIGNATURE_ARRAY_STRING_VARIANT = new NativeString("{sv}");
-    public static final NativeString S_D = new NativeString("d");
-    public static final NativeString S_B = new NativeString("b");
-    public static final NativeString S_PROGRESS = new NativeString("progress");
-    public static final NativeString S_PROGRESS_VISIBLE = new NativeString("progress-visible");
-    public static NativeString S_OBJECT_PATH;
-    public static NativeString S_DESKTOP_PATH;
-
-    private final IntBuffer I_TRUE = BufferUtils.createIntBuffer(1).put(0, 1);
-    private final IntBuffer I_FALSE = BufferUtils.createIntBuffer(1).put(0, 0);
-    private final DoubleBuffer D_PROGRESS = BufferUtils.createDoubleBuffer(101);
-    private final PointerBuffer P_ERROR = BufferUtils.createPointerBuffer(1);
-
-    private final long itArgs = LibDBus.allocateDBusMessageIter();
-    private final long itProps = LibDBus.allocateDBusMessageIter();
-    private final long itKey = LibDBus.allocateDBusMessageIter();
-    private final long itValue = LibDBus.allocateDBusMessageIter();
+    private DBusCommunicationThread thread;
     private long glfwWindow;
     private String className;
     private String appName;
     private boolean desktopFileGenerated;
-    private long dbusConnection;
-
-    private ProgressStatus status = ProgressStatus.NONE;
-    private int value;
 
     @Override
     public void preInitialize() {
@@ -81,43 +59,28 @@ public class DBusProgressOperator implements ProgressOperator {
         GLFW.glfwWindowHintString(GLFW.GLFW_X11_INSTANCE_NAME, className);
         GLFW.glfwWindowHintString(GLFW.GLFW_WAYLAND_APP_ID, className);
 
-        S_OBJECT_PATH = new NativeString("/me/decce/progresspeek/" + ProcessHandle.current().pid());
-        S_DESKTOP_PATH = new NativeString("application://" + className + ".desktop");
+        thread = new DBusCommunicationThread(className);
+        thread.start();
     }
 
     @Override
     public void initialize(long glfwWindow) {
-        if (dbusConnection != 0L) {
-            return;
-        }
         if (!desktopFileGenerated) {
             throw new IllegalStateException("preInitialize was not called before initialize!");
         }
         this.glfwWindow = glfwWindow;
 
-        LibDBus.dbus_error_init(P_ERROR.address());
-        dbusConnection = LibDBus.dbus_bus_get(LibDBus.DBUS_BUS_SESSION, P_ERROR.address());
-        if (LibDBus.dbus_error_is_set(P_ERROR.address()) != 0 || dbusConnection == 0L) {
-            LibDBus.dbus_error_free(P_ERROR.address());
-            ProgressPeekCore.LOGGER.error("Failed to establish DBus connection");
-        }
-
-        D_PROGRESS.put(0, 0.01d);
-        for (int i = 1; i <= 100; i++) {
-            D_PROGRESS.put(i, i * 0.01d);
-        }
-
-        set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
+        thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
     }
 
     @Override
     public void setStatus(ProgressStatus status) {
-        set(status, this.value);
+        thread.set(status);
     }
 
     @Override
     public void setValue(int percentage) {
-        set(this.status, percentage);
+        thread.set(percentage);
     }
 
     @Override
@@ -139,53 +102,6 @@ public class DBusProgressOperator implements ProgressOperator {
             return DEFAULT_CLASS_NAME;
         }
         return raw;
-    }
-
-    private void set(ProgressStatus status, int value) {
-        this.set(status, value, false);
-    }
-
-    private void set(ProgressStatus status, int value, boolean force) {
-        if (this.status == status && this.value == value && !force) {
-            return;
-        }
-        long msg = LibDBus.dbus_message_new_signal(S_OBJECT_PATH.address(), S_INTERFACE.address(), S_SIGNAL.address());
-        LibDBus.dbus_message_set_no_reply(msg, 1);
-        LibDBus.dbus_message_iter_init_append(msg, itArgs);
-        LibDBus.dbus_message_iter_append_basic(itArgs, LibDBus.DBUS_TYPE_STRING, S_DESKTOP_PATH.pointer());
-        LibDBus.dbus_message_iter_open_container(itArgs, LibDBus.DBUS_TYPE_ARRAY, S_SIGNATURE_ARRAY_STRING_VARIANT.address(), itProps);
-
-        // progress
-        if (this.value != value || force) {
-            this.value = value;
-            LibDBus.dbus_message_iter_open_container(itProps, LibDBus.DBUS_TYPE_DICT_ENTRY, 0, itKey);
-            LibDBus.dbus_message_iter_append_basic(itKey, LibDBus.DBUS_TYPE_STRING, S_PROGRESS.pointer());
-            LibDBus.dbus_message_iter_open_container(itKey, LibDBus.DBUS_TYPE_VARIANT, S_D.address(), itValue);
-            LibDBus.dbus_message_iter_append_basic(itValue, LibDBus.DBUS_TYPE_DOUBLE, MemoryUtil.memAddress(D_PROGRESS, value));
-            LibDBus.dbus_message_iter_close_container(itKey, itValue);
-            LibDBus.dbus_message_iter_close_container(itProps, itKey);
-        }
-
-        // progress-visible
-        if (this.status != status || force) {
-            this.status = status;
-            LibDBus.dbus_message_iter_open_container(itProps, LibDBus.DBUS_TYPE_DICT_ENTRY, 0, itKey);
-            LibDBus.dbus_message_iter_append_basic(itKey, LibDBus.DBUS_TYPE_STRING, S_PROGRESS_VISIBLE.pointer());
-            LibDBus.dbus_message_iter_open_container(itKey, LibDBus.DBUS_TYPE_VARIANT, S_B.address(), itValue);
-            LibDBus.dbus_message_iter_append_basic(itValue, LibDBus.DBUS_TYPE_BOOLEAN, MemoryUtil.memAddress(status == ProgressStatus.NONE ? I_FALSE : I_TRUE));
-            LibDBus.dbus_message_iter_close_container(itKey, itValue);
-            LibDBus.dbus_message_iter_close_container(itProps, itKey);
-        }
-
-        LibDBus.dbus_message_iter_close_container(itArgs, itProps);
-
-        LibDBus.dbus_connection_send(dbusConnection, msg,0);
-
-        if (ProgressPeekCore.config.linuxExplicitFlush) {
-            LibDBus.dbus_connection_flush(dbusConnection);
-        }
-
-        LibDBus.dbus_message_unref(msg);
     }
 
     private String generateDummyDesktopContent() {
