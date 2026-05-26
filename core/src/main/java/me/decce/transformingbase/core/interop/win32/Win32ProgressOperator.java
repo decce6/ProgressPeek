@@ -88,13 +88,7 @@ public class Win32ProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void transitionToNoProgress(boolean notify) {
-        if (this.status != ProgressStatus.NONE) {
-            this.setStatus(ProgressStatus.NONE);
-            //TODO make flash configurable
-            if (notify) {
-                User32Ex.FlashWindow(hWnd, true);
-            }
-        }
+    public void requestAttention() {
+        User32Ex.FlashWindow(hWnd, true);
     }
 }

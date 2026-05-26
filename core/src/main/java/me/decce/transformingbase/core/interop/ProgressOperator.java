@@ -30,5 +30,5 @@ public interface ProgressOperator {
     void initialize(long glfwWindow);
     void setStatus(ProgressStatus status);
     void setValue(int percentage);
-    void transitionToNoProgress(boolean notify);
+    void requestAttention();
 }

@@ -31,6 +31,9 @@ public class ProgressPeekCore {
     }
 
     public static void transitionToNoProgress(boolean notify) {
-        operator.transitionToNoProgress(notify);
+        operator.setStatus(ProgressStatus.NONE);
+        if (notify) {
+            operator.requestAttention();
+        }
     }
 }

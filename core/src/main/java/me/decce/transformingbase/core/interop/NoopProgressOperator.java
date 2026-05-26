@@ -24,7 +24,7 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void transitionToNoProgress(boolean notify) {
+    public void requestAttention() {
 
     }
 }

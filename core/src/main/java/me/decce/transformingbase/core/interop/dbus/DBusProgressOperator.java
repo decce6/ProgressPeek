@@ -121,9 +121,8 @@ public class DBusProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void transitionToNoProgress(boolean notify) {
-        setStatus(ProgressStatus.NONE);
-        //TODO notify
+    public void requestAttention() {
+        GLFW.glfwRequestWindowAttention(this.glfwWindow);
     }
 
     private String getAppName() {
