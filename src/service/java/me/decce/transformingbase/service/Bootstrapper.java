@@ -19,10 +19,10 @@ import java.util.Objects;
 //? neoforge {
 /*import me.decce.transformingbase.service.neoforge.transformers.DisplayWindowTransformer;
 //? >=1.21.11 {
-import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
-//? } else {
-/^import me.decce.transformingbase.service.neoforge.transformers.RenderElementTransformer;
-^///? }
+/^import me.decce.transformingbase.service.neoforge.transformers.ProgressBarsElementTransformer;
+^///? } else {
+import me.decce.transformingbase.service.neoforge.transformers.RenderElementTransformer;
+//? }
 *///? }
 //? forge {
 /*import me.decce.transformingbase.service.forge.transformers.RenderElementTransformer;
@@ -40,28 +40,29 @@ public class Bootstrapper {
         bootstrapped = true;
 
         var classLoaderHandler = new ClassLoaderHandlerImpl(GLFWErrorCallbackI.class.getClassLoader(), Bootstrapper.class.getClassLoader());
-        classLoaderHandler.loadCoreClasses(Bootstrapper.class);
+        //? !fabric {
+        /*classLoaderHandler.loadCoreClasses(Bootstrapper.class);
         classLoaderHandler.removeModClassesFromServiceLayer();
+        *///? }
 
         var helper = new TransformationHelper(classLoaderHandler.targetClassLoader, classLoaderHandler.modClassLoader);
 
-        helper.setup(getInstrumentation(), true, false
-                //? if fabric {
-                , new TransformerDefinition("net.fabricmc.loader.impl.launch.knot.KnotClassDelegate", me.decce.transformingbase.service.fabric.KnotClassDelegateTransformer.class)
-                //?}
+        //? !fabric {
+        /*helper.setup(getInstrumentation(), true, false
                 //? if neoforge {
-                /*, new TransformerDefinition("net.neoforged.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
+                /^, new TransformerDefinition("net.neoforged.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
                 //? >=1.21.11 {
-                , new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
-                //? } else {
-                /^, new TransformerDefinition("net.neoforged.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
+                /^¹, new TransformerDefinition("net.neoforged.fml.earlydisplay.render.elements.ProgressBarsElement", ProgressBarsElementTransformer.class)
+                ¹^///? } else {
+                , new TransformerDefinition("net.neoforged.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
+                //? }
                 ^///? }
-                *///? }
                 //? if forge {
-                /*, new TransformerDefinition("net.minecraftforge.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
+                /^, new TransformerDefinition("net.minecraftforge.fml.earlydisplay.DisplayWindow", DisplayWindowTransformer.class)
                 , new TransformerDefinition("net.minecraftforge.fml.earlydisplay.RenderElement", RenderElementTransformer.class)
-                *///? }
+                ^///? }
         );
+        *///? }
 
         classLoaderHandler.close();
 
