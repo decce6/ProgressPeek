@@ -8,8 +8,10 @@
     "LevelLoadingScreenMixin",
     "LoadingOverlayMixin",
     "MinecraftMixin",
+    "PauseScreenMixin",
     "WindowMixin",
-    "WorldOpenFlowsMixin"
+    "WorldOpenFlowsMixin",
+    "WorldSelectionListMixin"
   ],
   "injectors": {
     "defaultRequire": 1
