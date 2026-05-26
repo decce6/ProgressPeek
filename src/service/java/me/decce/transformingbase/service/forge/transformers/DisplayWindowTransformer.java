@@ -14,6 +14,12 @@ public class DisplayWindowTransformer {
     @CShadow
     private long window;
 
+    @CInline
+    @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"))
+    private void progresspeek$preInit() {
+        ProgressPeekCore.preInit();
+    }
+
     // Inject into periodicTick instead of initWindow because, if running on an older version of Forge, our
     // ImmediateWindowProvider wouldn't run, meaning our transformations would happen *after* initWindow finishes.
     @CInline

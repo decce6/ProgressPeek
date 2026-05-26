@@ -2,6 +2,7 @@ package me.decce.transformingbase.core.interop;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
+import me.decce.transformingbase.core.interop.dbus.DBusProgressOperator;
 import me.decce.transformingbase.core.interop.win32.Win32ProgressOperator;
 import org.lwjgl.system.Platform;
 
@@ -15,6 +16,9 @@ public interface ProgressOperator {
             case WINDOWS -> {
                 return new Win32ProgressOperator();
             }
+            case LINUX -> {
+                return new DBusProgressOperator();
+            }
             default -> {
                 ProgressPeekCore.LOGGER.info("Disabling ProgressPeek as current platform is unsupported: {}", Platform.get().getName());
                 return new NoopProgressOperator();
@@ -22,6 +26,7 @@ public interface ProgressOperator {
         }
     }
 
+    void preInitialize();
     void initialize(long glfwWindow);
     void setStatus(ProgressStatus status);
     void setValue(int percentage);

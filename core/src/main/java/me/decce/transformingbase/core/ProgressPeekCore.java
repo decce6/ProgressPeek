@@ -9,6 +9,10 @@ public class ProgressPeekCore {
     private static final ProgressOperator operator = ProgressOperator.create();
     public static ProgressPeekConfig config;
 
+    public static void preInit() {
+        operator.preInitialize();
+    }
+
     public static void init(long glfwWindow) {
         operator.initialize(glfwWindow);
     }

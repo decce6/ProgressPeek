@@ -13,6 +13,11 @@ public class DisplayWindowTransformer {
     @CShadow
     private long window;
 
+    @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"))
+    private void progresspeek$preInit() {
+        ProgressPeekCore.preInit();
+    }
+
     @CInject(method = "initWindow", target = @CTarget("RETURN"))
     private void progresspeek$initialize() {
         ProgressPeekCore.init(window);
