@@ -1,6 +1,7 @@
 package me.decce.transformingbase.core.interop.dbus;
 
 import org.lwjgl.system.*;
+import org.lwjgl.system.libc.LibCStdlib;
 
 import static org.lwjgl.system.APIUtil.apiGetFunctionAddress;
 
@@ -89,6 +90,6 @@ public class LibDBus {
 
     public static long allocateDBusMessageIter() {
         // DBusMessageIter is an opaque struct containing 4 pointers and 4 integers
-        return MemoryUtil.nmemAlloc(4L * Pointer.POINTER_SIZE + 4L * Integer.BYTES);
+        return LibCStdlib.ncalloc(1, 4L * Pointer.POINTER_SIZE + 4L * Integer.BYTES);
     }
 }
