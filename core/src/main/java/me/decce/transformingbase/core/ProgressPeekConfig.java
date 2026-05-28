@@ -9,6 +9,12 @@ import java.lang.annotation.Target;
 public class ProgressPeekConfig {
     @Comment("Specifies whether to enable the mod")
     public boolean enabled = true;
+    @Comment("Specifies whether to enable the mod on Windows")
+    @Key("windows.enabled")
+    public boolean windowsEnabled = true;
+    @Comment("Specifies whether to enable the mod on Linux")
+    @Key("linux.enabled")
+    public boolean linuxEnabled = true;
     @Comment("Specifies the app id and window class name")
     @Key("linux.app_id")
     public String linuxAppId = "";

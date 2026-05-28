@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ProgressPeekCore {
     public static final Logger LOGGER = LogManager.getLogger();
-    private static final ProgressOperator operator = ProgressOperator.create();
+    public static ProgressOperator operator;
     public static ProgressPeekConfig config;
 
     public static void preInit() {

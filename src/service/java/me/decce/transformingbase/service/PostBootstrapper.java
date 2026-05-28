@@ -2,6 +2,7 @@ package me.decce.transformingbase.service;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.LibraryAccessor;
+import me.decce.transformingbase.core.interop.ProgressOperator;
 import org.apache.logging.log4j.Logger;
 
 import static me.decce.transformingbase.util.ReflectionHelper.unreflect;
@@ -10,6 +11,7 @@ public class PostBootstrapper {
     public static void bootstrap() {
         initMethodHandles();
         initConfig();
+        ProgressPeekCore.operator = ProgressOperator.create();
     }
 
     private static void initConfig() {
