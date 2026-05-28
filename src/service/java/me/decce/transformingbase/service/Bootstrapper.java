@@ -74,15 +74,32 @@ public class Bootstrapper {
             var codeSource = Objects.requireNonNull(Bootstrapper.class.getProtectionDomain().getCodeSource());
             var path = getAgentPath(codeSource);
             if (path != null) {
-                return AgentLoader.load(path);
+                try {
+                    return AgentLoader.load(path);
+                }
+                catch (Throwable throwable) {
+                    LOGGER.debug("Could not load instrumentation with primary method");
+                    return getInstrumentationWithReflect(throwable);
+                }
             }
             else {
                 LOGGER.debug("Could not find mod jar, using fallback method for instrumentation");
-                return Agents.getInstrumentation();
+                return getInstrumentationWithReflect(null);
             }
         }
         catch (Throwable e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static Instrumentation getInstrumentationWithReflect(Throwable suppressed) {
+        try {
+            return Agents.getInstrumentation();
+        } catch (Throwable throwable) {
+            if (suppressed != null) {
+                throwable.addSuppressed(suppressed);
+            }
+            throw new RuntimeException(throwable);
         }
     }
 
