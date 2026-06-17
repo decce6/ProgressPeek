@@ -23,12 +23,12 @@ public class WindowMixin {
     /*private long window;
     *///? }
 
-    @Inject(method = "<init>" , at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"), require = 0)
+    @Inject(method = "<init>" , at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"), require = 0, expect = 0)
     private void progresspeek$preInitWindow(CallbackInfo ci) {
         ProgressPeekCore.preInit();
     }
 
-    @Inject(method = "createGlfwWindow", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"), require = 0)
+    @Inject(method = "createGlfwWindow", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J"), require = 0, expect = 0)
     private static void progresspeek$preInitWindow(CallbackInfoReturnable<Long> ci) {
         ProgressPeekCore.preInit();
     }
