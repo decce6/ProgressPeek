@@ -1,3 +1,7 @@
+## 1.0.2
+
+Added 26.2 support.
+
 ## 1.0.1
 
 - Fixed crash on startup on specific environments
