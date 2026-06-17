@@ -18,7 +18,13 @@ public class WorldOpenFlowsMixin {
         ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
     }
 
-    @Inject(method = "openWorldLoadLevelStem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
+    @Inject(method = "openWorldLoadLevelStem", at = @At(value = "INVOKE", target =
+            //? >=26.2 {
+            /*"Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"
+            *///? } else {
+            "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"
+            //? }
+    ))
     private void progresspeek$openWorldLoadLevelStem$1(CallbackInfo ci) {
         ProgressPeekCore.transitionToNoProgress(false);
     }
