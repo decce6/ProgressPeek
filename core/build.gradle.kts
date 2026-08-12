@@ -29,12 +29,12 @@ val shade = configurations.create("shade")
 configurations.implementation.get().extendsFrom(shade)
 
 dependencies {
-    shade ("net.lenni0451.classtransform:core:1.15.0") {
+    shade ("net.lenni0451.classtransform:core:1.15.1") {
         isTransitive = false
     }
     //shade ("org.ow2.asm:asm:9.9.1")
     //shade ("org.ow2.asm:asm-commons:9.9.1")
-    shade ("net.lenni0451:Reflect:1.6.2")
+    shade ("net.lenni0451:Reflect:1.6.4")
 
     compileOnly ("org.apache.logging.log4j:log4j-core:2.19.0")
     compileOnly ("cpw.mods:modlauncher:10.0.9")
@@ -54,13 +54,9 @@ tasks {
 
     named<ShadowJar>("shadowJar") {
         configurations = listOf(shade)
-        relocate("net.lenni0451.classtransform", "me.decce.transformingbase.shadow.classtransform")
-        relocate("net.lenni0451.reflect", "me.decce.transformingbase.shadow.reflect")
-//        relocate("org.objectweb.asm", "me.decce.transformingbase.core.shadow.asm")
+        relocate("net.lenni0451", "me.decce.transformingbase.shadow.lenni0451")
         relocate("com.electronwill.nightconfig", "me.decce.transformingbase.shadow.nightconfig")
         archiveClassifier = ""
-        exclude ("/META-INF/versions/21/**")
-        exclude ("/META-INF/versions/24/**")
     }
 
     assemble {

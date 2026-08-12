@@ -50,10 +50,10 @@ dependencies {
     shade("me.decce.transformingbase:core") {
         isTransitive = false
     }
-    shade("net.lenni0451.classtransform:core:1.15.0") {
+    shade("net.lenni0451.classtransform:core:1.15.1") {
         isTransitive = false
     }
-    shade("net.lenni0451:Reflect:1.6.2")
+    shade("net.lenni0451:Reflect:1.6.4")
     shade("com.electronwill.night-config:core:3.8.3")
     shade("com.electronwill.night-config:toml:3.8.3")
 }
@@ -122,8 +122,7 @@ tasks {
         from (files(layout.settingsDirectory.file("thirdparty/licenses/LICENSE_NightConfig")))
         from (serviceSourceSet.output)
         relocate("me.decce.transformingbase", "me.decce.$modid")
-        relocate("net.lenni0451.classtransform", "me.decce.$modid.shadow.classtransform")
-        relocate("net.lenni0451.reflect", "me.decce.$modid.shadow.reflect")
+        relocate("net.lenni0451", "me.decce.$modid.shadow.lenni0451")
         relocate("com.electronwill.nightconfig", "me.decce.$modid.shadow.nightconfig")
         configurations = listOf(shade)
         mergeServiceFiles()
@@ -163,8 +162,8 @@ publishMods {
     }
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        clientRequired = true
-        serverRequired = false
+        client = true
+        server = false
         projectId = "1554328"
         projectSlug = modid
         if (hasProperty("minecraft_supported_from")) {
@@ -181,6 +180,7 @@ publishMods {
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "1A2XNzUB"
+        environment = CLIENT_ONLY
         if (hasProperty("minecraft_supported_from")) {
             minecraftVersionRange {
                 start = prop("minecraft_supported_from")
