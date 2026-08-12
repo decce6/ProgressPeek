@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Fixed progress occasionally not being reset after switching level.
+
 ## 1.0.2
 
 Added 26.2 support.
