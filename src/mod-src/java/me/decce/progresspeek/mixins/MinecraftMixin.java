@@ -23,6 +23,13 @@ public class MinecraftMixin {
     }
     //? }
 
+    @Inject(method = "setScreen", at = @At("RETURN"))
+    private void progresspeek$setScreen(Screen screen, CallbackInfo ci) {
+        if (screen == null) {
+            ProgressPeekCore.transitionToNoProgress(false);
+        }
+    }
+
     //? >=1.21.10 {
     @WrapMethod(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V")
     public void progresspeek$disconnect(Screen screen, boolean keepResourcePacks, boolean stopSound, Operation<Void> original) {
