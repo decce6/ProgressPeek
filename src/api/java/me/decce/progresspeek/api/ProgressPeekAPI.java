@@ -11,6 +11,10 @@ import me.decce.transformingbase.core.ProgressStatus;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This is the main API class for Progress Peek.
+ * @since 1.1.0
+ */
 @SuppressWarnings("unused")
 public class ProgressPeekAPI {
     private static final ProgressPeekAPI SHARED = new ProgressPeekAPI("<unnamed>");
