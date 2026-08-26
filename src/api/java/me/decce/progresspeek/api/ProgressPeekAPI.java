@@ -61,6 +61,9 @@ public class ProgressPeekAPI {
      * @param status the new progress status
      */
     public void setStatus(Status status) {
+        if (status == null) {
+            throw new NullPointerException(this.id + " requested null status");
+        }
         this.status = status;
         this.flush();
     }
@@ -71,7 +74,7 @@ public class ProgressPeekAPI {
      */
     public void setValue(int value) {
         if (value > 100 || value < 0) {
-            throw new IllegalArgumentException("requested progress value is " + value + ", must be between 0 and 100 (inclusive)");
+            throw new IllegalArgumentException(this.id + " requested progress value " + value + ", which should be between 0 and 100 (inclusive)");
         }
         this.value = value;
         this.flush();
@@ -83,7 +86,7 @@ public class ProgressPeekAPI {
      */
     public void setValue(float value) {
         if (value > 1.0f || value < 0.0f) {
-            throw new IllegalArgumentException("requested progress value is " + value + ", must be between 0 and 1 (inclusive)");
+            throw new IllegalArgumentException(this.id + " requested progress value " + value + ", which should be between 0.0 and 1.0 (inclusive)");
         }
         setValue(Math.round(value * 100));
     }
