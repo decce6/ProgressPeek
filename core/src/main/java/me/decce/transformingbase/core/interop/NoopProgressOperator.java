@@ -19,6 +19,11 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
+    public int getValue() {
+        return 0;
+    }
+
+    @Override
     public void setStatus(ProgressStatus status) {
 
     }

@@ -56,11 +56,9 @@ tasks {
 
     assemble.get().dependsOn(jijShadowJar)
 
-    register<Copy>("buildAndCollect") {
-        group = "build"
+    named<Copy>("buildAndCollect") {
         dependsOn(jijShadowJar)
         from(jijShadowJar.flatMap { it.archiveFile })
-        into(rootProject.layout.buildDirectory.dir("libs"))
     }
 }
 

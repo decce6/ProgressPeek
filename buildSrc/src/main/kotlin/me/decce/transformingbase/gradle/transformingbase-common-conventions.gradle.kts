@@ -36,6 +36,10 @@ base {
     archivesName = modid
 }
 
+val apiSourceSet = sourceSets.create("api") {
+    compileClasspath += sourceSets["main"].compileClasspath
+    runtimeClasspath += sourceSets["main"].runtimeClasspath
+}
 val modSourceSet = sourceSets.create("mod-src") {
     compileClasspath += sourceSets["main"].compileClasspath
     runtimeClasspath += sourceSets["main"].runtimeClasspath
@@ -44,6 +48,25 @@ val modSourceSet = sourceSets.create("mod-src") {
 val serviceSourceSet = sourceSets.create("service") {
     compileClasspath += sourceSets["main"].compileClasspath
     runtimeClasspath += sourceSets["main"].runtimeClasspath
+}
+
+val apiJar = tasks.register<Jar>("apiJar") {
+    from(files(layout.settingsDirectory.file("src/api/LICENSE-API")))
+    from(apiSourceSet.output)
+    archiveClassifier = "api"
+}
+val apiSourcesJar = tasks.register<Jar>("apiSourcesJar") {
+    from(files(layout.settingsDirectory.file("src/api/LICENSE-API")))
+    from(apiSourceSet.allSource)
+    archiveClassifier = "api-sources"
+}
+
+val sourcesJar = tasks.register<Jar>("sourcesJar") {
+    from(files(layout.settingsDirectory.file("LICENSE")))
+    from(files(layout.settingsDirectory.file("src/api/LICENSE-API")))
+    from(modSourceSet.allSource)
+    from(apiSourceSet.allSource)
+    archiveClassifier = "sources"
 }
 
 dependencies {
@@ -56,6 +79,7 @@ dependencies {
     shade("net.lenni0451:Reflect:1.6.4")
     shade("com.electronwill.night-config:core:3.8.3")
     shade("com.electronwill.night-config:toml:3.8.3")
+    "modSrcImplementation"(apiSourceSet.output)
 }
 
 fun fetchLatestChangelog() : String {
@@ -116,11 +140,20 @@ repositories {
 }
 
 tasks {
+    register<Copy>("buildAndCollect") {
+        group = "build"
+        from(apiJar)
+        from(apiSourcesJar)
+        from(sourcesJar)
+        into(rootProject.layout.buildDirectory.dir("libs"))
+    }
+
     named<ShadowJar>("shadowJar") {
         archiveClassifier = "fat"
         // Note: license files for ClassTransform and Reflect are already included by shadowing
         from (files(layout.settingsDirectory.file("thirdparty/licenses/LICENSE_NightConfig")))
         from (serviceSourceSet.output)
+        from (apiSourceSet.output)
         relocate("me.decce.transformingbase", "me.decce.$modid")
         relocate("net.lenni0451", "me.decce.$modid.shadow.lenni0451")
         relocate("com.electronwill.nightconfig", "me.decce.$modid.shadow.nightconfig")
@@ -181,6 +214,9 @@ publishMods {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "1A2XNzUB"
         environment = CLIENT_ONLY
+        additionalFiles.from(apiJar)
+        additionalFiles.from(apiSourcesJar)
+        additionalFiles.from(sourcesJar)
         if (hasProperty("minecraft_supported_from")) {
             minecraftVersionRange {
                 start = prop("minecraft_supported_from")

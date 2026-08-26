@@ -2,8 +2,8 @@ package me.decce.progresspeek.mixins;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import me.decce.transformingbase.core.ProgressPeekCore;
-import me.decce.transformingbase.core.ProgressStatus;
+import me.decce.progresspeek.ProgressPeekMod;
+import me.decce.progresspeek.api.ProgressPeekAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Overlay;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,24 +18,24 @@ public class MinecraftMixin {
     @Inject(method = "setOverlay", at = @At("RETURN"))
     private void progresspeek$setOverlay(Overlay overlay, CallbackInfo ci) {
         if (overlay == null) {
-            ProgressPeekCore.transitionToNoProgress(true);
+            ProgressPeekMod.API.transitionToNoProgress(true);
         }
     }
-    //? }
 
     @Inject(method = "setScreen", at = @At("RETURN"))
     private void progresspeek$setScreen(Screen screen, CallbackInfo ci) {
         if (screen == null) {
-            ProgressPeekCore.transitionToNoProgress(false);
+            ProgressPeekMod.API.transitionToNoProgress(false);
         }
     }
+    //? }
 
     //? >=1.21.10 {
     @WrapMethod(method = "disconnect(Lnet/minecraft/client/gui/screens/Screen;ZZ)V")
     public void progresspeek$disconnect(Screen screen, boolean keepResourcePacks, boolean stopSound, Operation<Void> original) {
-        ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
+        ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.INDETERMINATE);
         original.call(screen, keepResourcePacks, stopSound);
-        ProgressPeekCore.transitionToNoProgress(true);
+        ProgressPeekMod.API.transitionToNoProgress(true);
     }
     //? }
 }

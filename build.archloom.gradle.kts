@@ -80,11 +80,9 @@ tasks {
         )
     }
 
-    register<Copy>("buildAndCollect") {
-        group = "build"
+    named<Copy>("buildAndCollect") {
         dependsOn(remapJar)
         from(remapJar.flatMap { it.archiveFile })
-        into(rootProject.layout.buildDirectory.dir("libs"))
     }
 }
 

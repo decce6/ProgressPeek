@@ -1,10 +1,8 @@
 package me.decce.progresspeek.mixins;
 
-import com.mojang.serialization.Dynamic;
-import me.decce.transformingbase.core.ProgressPeekCore;
-import me.decce.transformingbase.core.ProgressStatus;
+import me.decce.progresspeek.ProgressPeekMod;
+import me.decce.progresspeek.api.ProgressPeekAPI;
 import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
-import net.minecraft.world.level.storage.LevelStorageSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +13,7 @@ public class WorldOpenFlowsMixin {
     //? >=1.21.1 {
     @Inject(method = "openWorldLoadLevelStem", at = @At("HEAD"))
     private void progresspeek$openWorldLoadLevelStem(CallbackInfo ci) {
-        ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
+        ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.INDETERMINATE);
     }
 
     @Inject(method = "openWorldLoadLevelStem", at = @At(value = "INVOKE", target =
@@ -26,7 +24,7 @@ public class WorldOpenFlowsMixin {
             //? }
     ))
     private void progresspeek$openWorldLoadLevelStem$1(CallbackInfo ci) {
-        ProgressPeekCore.transitionToNoProgress(false);
+        ProgressPeekMod.API.transitionToNoProgress(false);
     }
     //? }
 }

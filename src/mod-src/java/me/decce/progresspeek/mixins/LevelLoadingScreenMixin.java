@@ -1,7 +1,7 @@
 package me.decce.progresspeek.mixins;
 
-import me.decce.transformingbase.core.ProgressPeekCore;
-import me.decce.transformingbase.core.ProgressStatus;
+import me.decce.progresspeek.ProgressPeekMod;
+import me.decce.progresspeek.api.ProgressPeekAPI;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,16 +37,16 @@ public class LevelLoadingScreenMixin {
     private void progresspeek$updateProgress(CallbackInfo ci) {
         //? >=1.21.9 {
         if (this.loadTracker.hasProgress()) {
-            ProgressPeekCore.setStatus(ProgressStatus.NORMAL);
-            ProgressPeekCore.setValue(this.smoothedProgress);
+            ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.NORMAL);
+            ProgressPeekMod.API.setValue(this.smoothedProgress);
         }
         else {
-            ProgressPeekCore.setStatus(ProgressStatus.INDETERMINATE);
-            ProgressPeekCore.setValue(0);
+            ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.INDETERMINATE);
+            ProgressPeekMod.API.setValue(0);
         }
         //? } else {
-        /*ProgressPeekCore.setStatus(ProgressStatus.NORMAL);
-        ProgressPeekCore.setValue(progressListener.getProgress());
+        /*ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.NORMAL);
+        ProgressPeekMod.API.setValue(progressListener.getProgress());
         *///? }
     }
 
@@ -56,6 +56,6 @@ public class LevelLoadingScreenMixin {
     /*@Inject(method = "removed", at = @At("HEAD"))
     *///? }
     private void progresspeek$endProgress(CallbackInfo ci) {
-        ProgressPeekCore.transitionToNoProgress(true);
+        ProgressPeekMod.API.transitionToNoProgress(true);
     }
 }

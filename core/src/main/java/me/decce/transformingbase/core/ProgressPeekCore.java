@@ -27,7 +27,15 @@ public class ProgressPeekCore {
     }
 
     public static void setValue(float value) {
-        setValue((int) (value * 100));
+        setValue(Math.round(value * 100));
+    }
+
+    public static ProgressStatus getStatus() {
+        return operator.getStatus();
+    }
+
+    public static int getValue() {
+        return operator.getValue();
     }
 
     public static void transitionToNoProgress(boolean notify) {
@@ -37,5 +45,9 @@ public class ProgressPeekCore {
                 operator.requestAttention();
             }
         }
+    }
+
+    public static void requestAttention() {
+        operator.requestAttention();
     }
 }

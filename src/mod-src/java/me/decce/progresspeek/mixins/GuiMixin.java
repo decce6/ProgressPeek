@@ -1,8 +1,9 @@
 package me.decce.progresspeek.mixins;
 
-import me.decce.transformingbase.core.ProgressPeekCore;
+import me.decce.progresspeek.ProgressPeekMod;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Overlay;
+import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,7 +15,14 @@ public class GuiMixin {
     /*@Inject(method = "setOverlay", at = @At("RETURN"))
     private void progresspeek$setOverlay(Overlay overlay, CallbackInfo ci) {
         if (overlay == null) {
-            ProgressPeekCore.transitionToNoProgress(true);
+            ProgressPeekMod.API.transitionToNoProgress(true);
+        }
+    }
+
+    @Inject(method = "setScreen", at = @At("RETURN"))
+    private void progresspeek$setScreen(Screen screen, CallbackInfo ci) {
+        if (screen == null) {
+            ProgressPeekMod.API.transitionToNoProgress(false);
         }
     }
     *///? }

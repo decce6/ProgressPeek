@@ -1,9 +1,7 @@
 package me.decce.progresspeek.mixins;
 
 import me.decce.progresspeek.ProgressPeekMod;
-import me.decce.transformingbase.core.ProgressPeekCore;
-import me.decce.transformingbase.core.ProgressStatus;
-import net.minecraft.client.Minecraft;
+import me.decce.progresspeek.api.ProgressPeekAPI;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LoadingOverlay;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,8 +23,8 @@ public class LoadingOverlayMixin {
     private void progresspeek$updateProgress(GuiGraphics guiGraphics, int i, int j, float f, CallbackInfo ci) {
         //noinspection ConstantValue
         if (this == (Object) ProgressPeekMod.getOverlay()) {
-            ProgressPeekCore.setStatus(ProgressStatus.NORMAL);
-            ProgressPeekCore.setValue(this.currentProgress);
+            ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.NORMAL);
+            ProgressPeekMod.API.setValue(this.currentProgress);
         }
     }
 }

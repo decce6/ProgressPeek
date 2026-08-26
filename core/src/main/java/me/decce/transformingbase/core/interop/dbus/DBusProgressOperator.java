@@ -23,6 +23,7 @@ public class DBusProgressOperator implements ProgressOperator {
     public static final String DEFAULT_CLASS_NAME = "me.decce.progresspeek";
 
     private ProgressStatus status = ProgressStatus.NONE;
+    private int value;
     private DBusCommunicationThread thread;
     private long glfwWindow;
     private String className;
@@ -84,6 +85,11 @@ public class DBusProgressOperator implements ProgressOperator {
     }
 
     @Override
+    public int getValue() {
+        return value;
+    }
+
+    @Override
     public void setStatus(ProgressStatus status) {
         if (thread != null) {
             this.status = status;
@@ -94,6 +100,7 @@ public class DBusProgressOperator implements ProgressOperator {
     @Override
     public void setValue(int percentage) {
         if (thread != null) {
+            this.value = percentage;
             thread.set(percentage);
         }
     }

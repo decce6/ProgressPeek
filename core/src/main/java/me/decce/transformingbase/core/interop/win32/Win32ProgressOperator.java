@@ -66,6 +66,11 @@ public class Win32ProgressOperator implements ProgressOperator {
     }
 
     @Override
+    public int getValue() {
+        return value;
+    }
+
+    @Override
     public void setStatus(ProgressStatus status) {
         if (initialized && status != this.status) {
             this.status = status;
