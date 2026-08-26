@@ -1,3 +1,10 @@
+## 1.1.0
+
+- Added an API. The API can be used by mods to set the progress status and value. The API is designed so multiple mods can use it to update the progress simultaneously. Documentation can be found [here](https://github.com/decce6/ProgressPeek/blob/main/API_DOCS.md).
+- Linux: Changed default app name in the generated desktop file to "Minecraft"
+- Linux: Fixed multiple instances sharing progress
+- Added `iconFile` and `bannerFile` in NeoForge mod manifest
+
 ## 1.0.3
 
 - Fixed progress occasionally not being reset after switching level.
