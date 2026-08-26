@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
 public class DBusProgressOperator implements ProgressOperator {
-    public static final String DEFAULT_APP_NAME = "Minecraft with ProgressPeek";
+    public static final String DEFAULT_APP_NAME = "Minecraft";
     public static final String DEFAULT_CLASS_NAME = "me.decce.progresspeek";
 
     private ProgressStatus status = ProgressStatus.NONE;
