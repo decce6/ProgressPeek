@@ -2,16 +2,10 @@ package me.decce.transformingbase.core.interop.dbus;
 
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
-import me.decce.transformingbase.core.interop.NativeString;
 import me.decce.transformingbase.core.interop.ProgressOperator;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.MemoryUtil;
 
 import java.io.IOException;
-import java.nio.DoubleBuffer;
-import java.nio.IntBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +14,7 @@ import java.nio.file.StandardOpenOption;
 
 public class DBusProgressOperator implements ProgressOperator {
     public static final String DEFAULT_APP_NAME = "Minecraft";
-    public static final String DEFAULT_CLASS_NAME = "me.decce.progresspeek";
+    public static final String DEFAULT_CLASS_NAME_PREFIX = "me.decce.progresspeek";
 
     private ProgressStatus status = ProgressStatus.NONE;
     private int value;
@@ -122,10 +116,11 @@ public class DBusProgressOperator implements ProgressOperator {
 
     private String getClassName() {
         var raw = ProgressPeekCore.config.linuxAppId;
+        var pid = ProcessHandle.current().pid();
         if (raw.isEmpty()) {
-            return DEFAULT_CLASS_NAME;
+            return DEFAULT_CLASS_NAME_PREFIX + "_" + pid;
         }
-        return raw;
+        return raw + "_" + pid;
     }
 
     private String generateDummyDesktopContent() {

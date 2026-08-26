@@ -18,7 +18,8 @@ public class ProgressPeekConfig {
     @Comment("Specifies the app id and window class name")
     @Key("linux.app_id")
     public String linuxAppId = "";
-    @Comment("Specifies the app name when generating the desktop file. Note that this changes the Name property in the desktop file, not the name of the file itself.")
+    @Comment("Specifies the prefix for the app name when generating the desktop file. Note that this changes the Name property in the desktop file, not the name of the file itself.\n" +
+            "The final app name will be this option concatenated with the PID.")
     @Key("linux.desktop_file_name")
     public String linuxAppName = "";
     @Comment("When enabled, explicitly flush dbus connection when sending message")
