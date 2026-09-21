@@ -4,6 +4,11 @@ import me.decce.transformingbase.core.ProgressStatus;
 
 public class NoopProgressOperator implements ProgressOperator {
     @Override
+    public void verifySupported() throws UnsupportedProgressOperatorException {
+
+    }
+
+    @Override
     public void preInitialize() {
 
     }

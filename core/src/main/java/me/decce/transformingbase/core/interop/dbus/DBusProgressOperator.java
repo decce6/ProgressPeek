@@ -25,6 +25,13 @@ public class DBusProgressOperator implements ProgressOperator {
     private boolean desktopFileGenerated;
 
     @Override
+    public void verifySupported() throws UnsupportedProgressOperatorException {
+        if (LibDBus.LIBDBUS == null) {
+            throw new UnsupportedProgressOperatorException("Failed to initialize the libdbus library!");
+        }
+    }
+
+    @Override
     public void preInitialize() {
         appName = getAppName();
         className = getClassName();

@@ -22,6 +22,11 @@ public class Win32ProgressOperator implements ProgressOperator {
     private long PFN_SETPROGRESSSTATE;
 
     @Override
+    public void verifySupported() throws UnsupportedProgressOperatorException {
+        // No-op
+    }
+
+    @Override
     public void preInitialize() {
         // No-op
     }

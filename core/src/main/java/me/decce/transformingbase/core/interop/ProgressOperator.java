@@ -15,6 +15,17 @@ public interface ProgressOperator {
             ProgressPeekCore.LOGGER.info("Disabling ProgressPeek as current platform is not 64-bit.");
             return new NoopProgressOperator();
         }
+        ProgressOperator operator = createByPlatform();
+        try {
+            operator.verifySupported();
+            return operator;
+        } catch (UnsupportedProgressOperatorException e) {
+            ProgressPeekCore.LOGGER.warn("Failed to initialize {}, ProgressPeek will be disabled", operator.getClass().getSimpleName(), e);
+        }
+        return new NoopProgressOperator();
+    }
+
+    private static ProgressOperator createByPlatform() {
         switch (Platform.get()) {
             case WINDOWS -> {
                 if (ProgressPeekCore.config.windowsEnabled) {
@@ -26,14 +37,12 @@ public interface ProgressOperator {
                     return new DBusProgressOperator();
                 }
             }
-            default -> {
-                ProgressPeekCore.LOGGER.info("Disabling ProgressPeek as current platform is unsupported: {}", Platform.get().getName());
-                return new NoopProgressOperator();
-            }
         }
+        ProgressPeekCore.LOGGER.info("Disabling ProgressPeek as current platform is unsupported: {}", Platform.get().getName());
         return new NoopProgressOperator();
     }
 
+    void verifySupported() throws UnsupportedProgressOperatorException;
     void preInitialize();
     void initialize(long glfwWindow);
     ProgressStatus getStatus();
@@ -41,4 +50,17 @@ public interface ProgressOperator {
     void setStatus(ProgressStatus status);
     void setValue(int percentage);
     void requestAttention();
+
+    class UnsupportedProgressOperatorException extends Exception {
+        public UnsupportedProgressOperatorException() {
+        }
+
+        public UnsupportedProgressOperatorException(String message) {
+            super(message);
+        }
+
+        public UnsupportedProgressOperatorException(Throwable cause) {
+            super(cause);
+        }
+    }
 }
