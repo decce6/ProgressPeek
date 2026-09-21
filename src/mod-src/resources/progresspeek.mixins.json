@@ -9,6 +9,7 @@
     "LoadingOverlayMixin",
     "MinecraftMixin",
     "PauseScreenMixin",
+    "RenderSystemMixin",
     "WindowMixin",
     "WorldOpenFlowsMixin",
     "WorldSelectionListMixin"

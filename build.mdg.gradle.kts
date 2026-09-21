@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("me.decce.transformingbase.gradle.transformingbase-common-conventions")
-    id("net.neoforged.moddev") version "2.0.141"
+    id("net.neoforged.moddev") version "2.0.147"
     id("com.gradleup.shadow")
     id("me.modmuss50.mod-publish-plugin")
 }

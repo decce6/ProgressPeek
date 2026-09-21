@@ -13,8 +13,8 @@ public class ProgressPeekCore {
         operator.preInitialize();
     }
 
-    public static void init(long glfwWindow) {
-        operator.initialize(glfwWindow);
+    public static void init(long windowHandle) {
+        operator.initialize(windowHandle);
     }
 
     //TODO thread safety

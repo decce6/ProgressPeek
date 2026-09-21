@@ -32,11 +32,11 @@ public class Win32ProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void initialize(long glfwWindow) {
+    public void initialize(long windowHandle) {
         if (unsupported) {
             return;
         }
-        hWnd = GLFWNativeWin32.glfwGetWin32Window(glfwWindow);
+        hWnd = GLFWNativeWin32.glfwGetWin32Window(windowHandle);
         if (hWnd == 0) {
             throw new IllegalStateException("hWnd is null!");
         }

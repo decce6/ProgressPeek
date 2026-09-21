@@ -14,7 +14,7 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void initialize(long glfwWindow) {
+    public void initialize(long windowHandle) {
 
     }
 

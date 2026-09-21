@@ -7,7 +7,6 @@ import me.decce.transformingbase.transform.TransformerDefinition;
 import net.lenni0451.reflect.Agents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFWErrorCallbackI;
 
 import java.lang.instrument.Instrumentation;
 import java.net.URISyntaxException;
@@ -39,7 +38,7 @@ public class Bootstrapper {
         }
         bootstrapped = true;
 
-        var classLoaderHandler = new ClassLoaderHandlerImpl(GLFWErrorCallbackI.class.getClassLoader(), Bootstrapper.class.getClassLoader());
+        var classLoaderHandler = new ClassLoaderHandlerImpl(org.lwjgl.Version.class.getClassLoader(), Bootstrapper.class.getClassLoader());
         //? !fabric {
         /*classLoaderHandler.loadCoreClasses(Bootstrapper.class);
         classLoaderHandler.removeModClassesFromServiceLayer();
