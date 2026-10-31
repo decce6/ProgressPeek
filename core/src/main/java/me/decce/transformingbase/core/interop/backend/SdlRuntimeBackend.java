@@ -13,7 +13,7 @@ public class SdlRuntimeBackend implements RuntimeBackend {
 
     @Override
     public void onLoad(LoadStage stage) {
-        if (stage == LoadStage.PRE_LIBRARY_INITIALIZE) {
+        if (stage == LoadStage.PRE_LIBRARY_INITIALIZATION) {
             if (Platform.get() == Platform.LINUX) {
                 DesktopFileHelper.instance().writeDesktopFile();
                 SDLHints.SDL_SetHint(SDLHints.SDL_HINT_APP_ID, DesktopFileHelper.instance().className);

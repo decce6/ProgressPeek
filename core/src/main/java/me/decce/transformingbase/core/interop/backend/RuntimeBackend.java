@@ -6,7 +6,7 @@ public interface RuntimeBackend {
     void requestWindowAttention(long handle);
 
     enum LoadStage {
-        PRE_LIBRARY_INITIALIZE,
+        PRE_LIBRARY_INITIALIZATION,
         PRE_WINDOW_CREATION
     }
 }

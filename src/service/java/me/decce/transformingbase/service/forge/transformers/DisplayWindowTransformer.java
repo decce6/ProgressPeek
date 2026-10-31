@@ -20,7 +20,7 @@ public class DisplayWindowTransformer {
     @CInline
     @CInject(method = "initWindow", target = @CTarget("HEAD"))
     private void progresspeek$preLibraryInitialization() {
-        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZE);
+        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZATION);
     }
 
     @CInline

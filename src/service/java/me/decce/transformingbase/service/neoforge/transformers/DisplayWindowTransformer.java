@@ -21,7 +21,7 @@ public class DisplayWindowTransformer {
     @CInject(method = "initWindow",
             target = { @CTarget(value = "INVOKE", target = "Lorg/lwjgl/sdl/SDLInit;SDL_Init(I)Z", optional = true), @CTarget(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GLX;_initGlfw()Z", optional = true) })
     private void progresspeek$preLibraryInitialize() {
-        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZE);
+        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZATION);
     }
 
     @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J", shift = CTarget.Shift.BEFORE, optional = true))

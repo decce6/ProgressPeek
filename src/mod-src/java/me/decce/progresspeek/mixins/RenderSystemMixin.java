@@ -1,7 +1,6 @@
 package me.decce.progresspeek.mixins;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.interop.backend.RuntimeBackend;
 import me.decce.transformingbase.core.interop.backend.RuntimeBackends;
 import net.minecraft.util.TimeSource;
@@ -16,6 +15,6 @@ public class RenderSystemMixin {
             at = { @At(value = "INVOKE", target = "Lorg/lwjgl/sdl/SDLInit;SDL_Init(I)Z"), @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/GLX;_initGlfw()Ljava/util/function/LongSupplier;") },
             expect = 1, require = 1)
     private static void progresspeek$preBackendInitialize(CallbackInfoReturnable<TimeSource.NanoTimeSource> cir) {
-        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZE);
+        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZATION);
     }
 }
