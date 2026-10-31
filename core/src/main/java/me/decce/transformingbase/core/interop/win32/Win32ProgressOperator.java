@@ -27,11 +27,6 @@ public class Win32ProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void preInitialize() {
-        // No-op
-    }
-
-    @Override
     public void initialize(NativeHandle windowHandle) {
         if (unsupported) {
             return;

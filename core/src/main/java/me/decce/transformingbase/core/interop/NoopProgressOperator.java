@@ -10,11 +10,6 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void preInitialize() {
-
-    }
-
-    @Override
     public void initialize(NativeHandle windowHandle) {
 
     }

@@ -44,7 +44,6 @@ public interface ProgressOperator {
     }
 
     void verifySupported() throws UnsupportedProgressOperatorException;
-    void preInitialize();
     void initialize(NativeHandle windowHandle);
     ProgressStatus getStatus();
     int getValue();

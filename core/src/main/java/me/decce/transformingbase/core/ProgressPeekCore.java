@@ -10,10 +10,6 @@ public class ProgressPeekCore {
     public static ProgressOperator operator;
     public static ProgressPeekConfig config;
 
-    public static void preInit() {
-        operator.preInitialize();
-    }
-
     public static void init(NativeHandle windowHandle) {
         operator.initialize(windowHandle);
     }

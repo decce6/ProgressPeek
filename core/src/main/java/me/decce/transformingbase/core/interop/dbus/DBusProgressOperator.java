@@ -11,7 +11,6 @@ public class DBusProgressOperator implements ProgressOperator {
     private int value;
     private DBusCommunicationThread thread;
     private NativeHandle windowHandle;
-    private boolean preInitialized;
 
     @Override
     public void verifySupported() throws UnsupportedProgressOperatorException {
@@ -21,17 +20,12 @@ public class DBusProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void preInitialize() {
-        thread = new DBusCommunicationThread(DesktopFileHelper.instance().className);
-        thread.start();
-        this.preInitialized = true;
-    }
-
-    @Override
     public void initialize(NativeHandle windowHandle) {
-        if (!preInitialized) {
-            this.preInitialize();
+        if (thread == null) {
+            thread = new DBusCommunicationThread(DesktopFileHelper.instance().className);
+            thread.start();
         }
+
         if (this.windowHandle != windowHandle) {
             this.windowHandle = windowHandle;
             // The thread might not have been initialized at this point, if on an older version of Forge which does not load ImmediateWindowProvider from mods
