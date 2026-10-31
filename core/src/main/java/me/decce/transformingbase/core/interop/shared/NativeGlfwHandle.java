@@ -12,9 +12,15 @@ public record NativeGlfwHandle(LongSupplier windows, LongSupplier macOS, LongSup
     public static NativeGlfwHandle fromGlfwHandle(long glfwHandle) {
         LongSupplier windowsHandle = () -> maybeGet(GLFWNativeWin32::glfwGetWin32Window, glfwHandle);
         LongSupplier macOSHandle = () -> maybeGet(GLFWNativeCocoa::glfwGetCocoaWindow, glfwHandle);
-        LongSupplier x11Handle = () -> maybeGet(GLFWNativeX11::glfwGetX11Window, glfwHandle);
-        LongSupplier waylandHandle = () -> maybeGet(GLFWNativeWayland::glfwGetWaylandWindow, glfwHandle);
-        return new NativeGlfwHandle(windowsHandle, macOSHandle, () -> x11Handle.getAsLong() == 0L ? waylandHandle.getAsLong() : x11Handle.getAsLong());
+        LongSupplier linuxHandle = () -> {
+            if (GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_X11) {
+                return GLFWNativeX11.glfwGetX11Window(glfwHandle);
+            }
+            else {
+                return GLFWNativeWayland.glfwGetWaylandWindow(glfwHandle);
+            }
+        };
+        return new NativeGlfwHandle(windowsHandle, macOSHandle, linuxHandle);
     }
 
     private static long maybeGet(LongFunction<Long> consumer, long arg) {
