@@ -1,6 +1,7 @@
 package me.decce.transformingbase.core.interop.backend;
 
 import me.decce.transformingbase.core.interop.shared.DesktopFileHelper;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 import org.lwjgl.glfw.GLFW;
 
 public class GlfwRuntimeBackend implements RuntimeBackend {
@@ -21,7 +22,7 @@ public class GlfwRuntimeBackend implements RuntimeBackend {
     }
 
     @Override
-    public void requestWindowAttention(long handle) {
-        GLFW.glfwRequestWindowAttention(handle);
+    public void requestWindowAttention(NativeHandle handle) {
+        GLFW.glfwRequestWindowAttention(handle.abstractHandle());
     }
 }

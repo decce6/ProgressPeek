@@ -1,5 +1,6 @@
 package me.decce.transformingbase.core.interop.shared;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWNativeCocoa;
 import org.lwjgl.glfw.GLFWNativeWayland;
 import org.lwjgl.glfw.GLFWNativeWin32;
@@ -8,7 +9,7 @@ import org.lwjgl.glfw.GLFWNativeX11;
 import java.util.function.LongFunction;
 import java.util.function.LongSupplier;
 
-public record NativeGlfwHandle(LongSupplier windows, LongSupplier macOS, LongSupplier linux) implements NativeHandle {
+public record NativeGlfwHandle(long abstractHandle, LongSupplier windows, LongSupplier macOS, LongSupplier linux) implements NativeHandle {
     public static NativeGlfwHandle fromGlfwHandle(long glfwHandle) {
         LongSupplier windowsHandle = () -> maybeGet(GLFWNativeWin32::glfwGetWin32Window, glfwHandle);
         LongSupplier macOSHandle = () -> maybeGet(GLFWNativeCocoa::glfwGetCocoaWindow, glfwHandle);
@@ -20,7 +21,7 @@ public record NativeGlfwHandle(LongSupplier windows, LongSupplier macOS, LongSup
                 return GLFWNativeWayland.glfwGetWaylandWindow(glfwHandle);
             }
         };
-        return new NativeGlfwHandle(windowsHandle, macOSHandle, linuxHandle);
+        return new NativeGlfwHandle(glfwHandle, windowsHandle, macOSHandle, linuxHandle);
     }
 
     private static long maybeGet(LongFunction<Long> consumer, long arg) {

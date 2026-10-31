@@ -64,7 +64,7 @@ public class DBusProgressOperator implements ProgressOperator {
     @Override
     public void requestAttention() {
         if (this.windowHandle != null) {
-             RuntimeBackends.current().requestWindowAttention(this.windowHandle.forLinux().getAsLong());
+             RuntimeBackends.current().requestWindowAttention(this.windowHandle);
         }
     }
 

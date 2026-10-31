@@ -1,6 +1,7 @@
 package me.decce.transformingbase.core.interop.backend;
 
 import me.decce.transformingbase.core.interop.shared.DesktopFileHelper;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 import org.lwjgl.sdl.SDLHints;
 import org.lwjgl.sdl.SDLTimer;
 import org.lwjgl.sdl.SDLVideo;
@@ -27,7 +28,7 @@ public class SdlRuntimeBackend implements RuntimeBackend {
     }
 
     @Override
-    public void requestWindowAttention(long handle) {
-        SDLVideo.SDL_FlashWindow(handle, SDLVideo.SDL_FLASH_UNTIL_FOCUSED);
+    public void requestWindowAttention(NativeHandle handle) {
+        SDLVideo.SDL_FlashWindow(handle.abstractHandle(), SDLVideo.SDL_FLASH_UNTIL_FOCUSED);
     }
 }
