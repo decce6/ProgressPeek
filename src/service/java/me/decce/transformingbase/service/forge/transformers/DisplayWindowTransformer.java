@@ -2,6 +2,8 @@ package me.decce.transformingbase.service.forge.transformers;
 
 //? forge {
 /*import me.decce.transformingbase.core.ProgressPeekCore;
+import me.decce.transformingbase.core.interop.backend.RuntimeBackend;
+import me.decce.transformingbase.core.interop.backend.RuntimeBackends;
 import me.decce.transformingbase.core.interop.shared.NativeGlfwHandle;
 import net.lenni0451.classtransform.annotations.CInline;
 import net.lenni0451.classtransform.annotations.CShadow;
@@ -16,9 +18,15 @@ public class DisplayWindowTransformer {
     private long window;
 
     @CInline
+    @CInject(method = "initWindow", target = @CTarget("HEAD"))
+    private void progresspeek$preLibraryInitialization() {
+        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_LIBRARY_INITIALIZE);
+    }
+
+    @CInline
     @CInject(method = "initWindow", target = @CTarget(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwCreateWindow(IILjava/lang/CharSequence;JJ)J", shift = CTarget.Shift.BEFORE))
-    private void progresspeek$preInit() {
-        ProgressPeekCore.preInit();
+    private void progresspeek$preWindowCreation() {
+        RuntimeBackends.current().onLoad(RuntimeBackend.LoadStage.PRE_WINDOW_CREATION);
     }
 
     // Inject into periodicTick instead of initWindow because, if running on an older version of Forge, our
