@@ -1,6 +1,7 @@
 package me.decce.transformingbase.core;
 
 import me.decce.transformingbase.core.interop.ProgressOperator;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +14,7 @@ public class ProgressPeekCore {
         operator.preInitialize();
     }
 
-    public static void init(long windowHandle) {
+    public static void init(NativeHandle windowHandle) {
         operator.initialize(windowHandle);
     }
 

@@ -10,11 +10,18 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 
 public class DesktopFileHelper {
+    private static final DesktopFileHelper INSTANCE = new DesktopFileHelper();
     public static final String DEFAULT_APP_NAME = "Minecraft";
     public static final String DEFAULT_CLASS_NAME_PREFIX = "me.decce.progresspeek";
 
     public final String appName = getAppName();
     public final String className = getClassName();
+
+    private DesktopFileHelper() {}
+
+    public static DesktopFileHelper instance() {
+        return INSTANCE;
+    }
 
     private static String getAppName() {
         var raw = ProgressPeekCore.config.linuxAppName;

@@ -2,6 +2,7 @@ package me.decce.transformingbase.service.forge.transformers;
 
 //? forge {
 /*import me.decce.transformingbase.core.ProgressPeekCore;
+import me.decce.transformingbase.core.interop.shared.NativeGlfwHandle;
 import net.lenni0451.classtransform.annotations.CInline;
 import net.lenni0451.classtransform.annotations.CShadow;
 import net.lenni0451.classtransform.annotations.CTarget;
@@ -25,7 +26,7 @@ public class DisplayWindowTransformer {
     @CInline
     @CInject(method = "periodicTick", target = @CTarget("RETURN"))
     private void progresspeek$initialize() {
-        ProgressPeekCore.init(window);
+        ProgressPeekCore.init(NativeGlfwHandle.fromGlfwHandle(window));
     }
 }
 *///? }

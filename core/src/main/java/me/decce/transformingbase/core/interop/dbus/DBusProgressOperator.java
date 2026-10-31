@@ -2,16 +2,16 @@ package me.decce.transformingbase.core.interop.dbus;
 
 import me.decce.transformingbase.core.ProgressStatus;
 import me.decce.transformingbase.core.interop.ProgressOperator;
+import me.decce.transformingbase.core.interop.backend.RuntimeBackends;
 import me.decce.transformingbase.core.interop.shared.DesktopFileHelper;
-import org.lwjgl.glfw.GLFW;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 
 public class DBusProgressOperator implements ProgressOperator {
-    private final DesktopFileHelper desktopFileHelper = new DesktopFileHelper();
     private ProgressStatus status = ProgressStatus.NONE;
     private int value;
     private DBusCommunicationThread thread;
-    private long glfwWindow;
-    private boolean desktopFileGenerated;
+    private NativeHandle windowHandle;
+    private boolean preInitialized;
 
     @Override
     public void verifySupported() throws UnsupportedProgressOperatorException {
@@ -22,26 +22,18 @@ public class DBusProgressOperator implements ProgressOperator {
 
     @Override
     public void preInitialize() {
-        if (!desktopFileGenerated) {
-            desktopFileGenerated = true;
-            desktopFileHelper.writeDesktopFile();
-        }
-
-        GLFW.glfwWindowHintString(GLFW.GLFW_X11_CLASS_NAME, desktopFileHelper.className);
-        GLFW.glfwWindowHintString(GLFW.GLFW_X11_INSTANCE_NAME, desktopFileHelper.className);
-        GLFW.glfwWindowHintString(GLFW.GLFW_WAYLAND_APP_ID, desktopFileHelper.className);
-
-        thread = new DBusCommunicationThread(desktopFileHelper.className);
+        thread = new DBusCommunicationThread(DesktopFileHelper.instance().className);
         thread.start();
+        this.preInitialized = true;
     }
 
     @Override
-    public void initialize(long windowHandle) {
-        if (!desktopFileGenerated) {
-            preInitialize();
+    public void initialize(NativeHandle windowHandle) {
+        if (!preInitialized) {
+            this.preInitialize();
         }
-        if (this.glfwWindow != windowHandle) {
-            this.glfwWindow = windowHandle;
+        if (this.windowHandle != windowHandle) {
+            this.windowHandle = windowHandle;
             // The thread might not have been initialized at this point, if on an older version of Forge which does not load ImmediateWindowProvider from mods
             if (thread != null) {
                 thread.set(ProgressStatus.NONE, 0, true); // Progress is persisted across launches - reset to 0
@@ -77,9 +69,8 @@ public class DBusProgressOperator implements ProgressOperator {
 
     @Override
     public void requestAttention() {
-        if (this.glfwWindow != 0L) {
-            // TODO: Ideally we should not depend on GLFW here
-            GLFW.glfwRequestWindowAttention(this.glfwWindow);
+        if (this.windowHandle != null) {
+             RuntimeBackends.current().requestWindowAttention(this.windowHandle.forLinux().getAsLong());
         }
     }
 

@@ -3,6 +3,8 @@ package me.decce.transformingbase.core.interop.dbus;
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
 import me.decce.transformingbase.core.interop.NativeString;
+import me.decce.transformingbase.core.interop.backend.RuntimeBackend;
+import me.decce.transformingbase.core.interop.backend.RuntimeBackends;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.PointerBuffer;
 import org.lwjgl.glfw.GLFW;
@@ -21,6 +23,8 @@ public class DBusCommunicationThread extends Thread {
     public static final NativeString S_PROGRESS_VISIBLE = new NativeString("progress-visible");
     public static NativeString S_OBJECT_PATH;
     public static NativeString S_DESKTOP_PATH;
+
+    private final RuntimeBackend backend = RuntimeBackends.current();
 
     private final IntBuffer I_TRUE = BufferUtils.createIntBuffer(1).put(0, 1);
     private final IntBuffer I_FALSE = BufferUtils.createIntBuffer(1).put(0, 0);
@@ -162,7 +166,7 @@ public class DBusCommunicationThread extends Thread {
         // progress-visible
         if (this.currentStatus != targetStatus) {
             if (targetStatus == ProgressStatus.INDETERMINATE) {
-                indeterminateStartTime = GLFW.glfwGetTime();
+                indeterminateStartTime = backend.getTime();
             }
             this.currentStatus = targetStatus;
             LibDBus.dbus_message_iter_open_container(itProps, LibDBus.DBUS_TYPE_DICT_ENTRY, 0, itKey);
@@ -185,7 +189,7 @@ public class DBusCommunicationThread extends Thread {
     }
 
     private int updateIndeterminateValue() {
-        double factor = ((GLFW.glfwGetTime() - indeterminateStartTime) % INDETERMINATE_CYCLE_DURATION_SECS) / INDETERMINATE_CYCLE_DURATION_SECS;
+        double factor = ((backend.getTime() - indeterminateStartTime) % INDETERMINATE_CYCLE_DURATION_SECS) / INDETERMINATE_CYCLE_DURATION_SECS;
         return (int) (100.0d * cubicEaseInOut(factor < 0.5d ? factor * 2d : (1.0d - factor) * 2d));
     }
 

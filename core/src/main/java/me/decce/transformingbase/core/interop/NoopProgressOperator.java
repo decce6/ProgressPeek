@@ -1,6 +1,7 @@
 package me.decce.transformingbase.core.interop;
 
 import me.decce.transformingbase.core.ProgressStatus;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 
 public class NoopProgressOperator implements ProgressOperator {
     @Override
@@ -14,7 +15,7 @@ public class NoopProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void initialize(long windowHandle) {
+    public void initialize(NativeHandle windowHandle) {
 
     }
 

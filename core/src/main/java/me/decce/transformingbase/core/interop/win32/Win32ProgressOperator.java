@@ -3,7 +3,7 @@ package me.decce.transformingbase.core.interop.win32;
 import me.decce.transformingbase.core.ProgressPeekCore;
 import me.decce.transformingbase.core.ProgressStatus;
 import me.decce.transformingbase.core.interop.ProgressOperator;
-import org.lwjgl.glfw.GLFWNativeWin32;
+import me.decce.transformingbase.core.interop.shared.NativeHandle;
 import org.lwjgl.system.MemoryStack;
 
 public class Win32ProgressOperator implements ProgressOperator {
@@ -32,11 +32,11 @@ public class Win32ProgressOperator implements ProgressOperator {
     }
 
     @Override
-    public void initialize(long windowHandle) {
+    public void initialize(NativeHandle windowHandle) {
         if (unsupported) {
             return;
         }
-        hWnd = GLFWNativeWin32.glfwGetWin32Window(windowHandle);
+        hWnd = windowHandle.forWindows().getAsLong();
         if (hWnd == 0) {
             throw new IllegalStateException("hWnd is null!");
         }
