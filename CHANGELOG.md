@@ -1,3 +1,8 @@
+## 1.2.0
+
+- Fixed game crash when libdbus is not available on Linux (the mod will be automatically disabled instead.)
+- Updated to 26.3 with SDL support
+
 ## 1.1.0
 
 - Added an API. The API can be used by mods to set the progress status and value. The API is designed so multiple mods can use it to update the progress simultaneously. Documentation can be found [here](https://github.com/decce6/ProgressPeek/blob/main/API_DOCS.md).
