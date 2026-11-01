@@ -46,7 +46,7 @@ public class LevelLoadingScreenMixin {
         }
         //? } else {
         /*ProgressPeekMod.API.setStatus(ProgressPeekAPI.Status.NORMAL);
-        ProgressPeekMod.API.setValue(progressListener.getProgress());
+        ProgressPeekMod.API.setValue(Math.max(0, Math.min(100, progressListener.getProgress())));
         *///? }
     }
 
