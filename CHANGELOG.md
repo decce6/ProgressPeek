@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Fixed a crash that might occur while loading level
+
 ## 1.2.0
 
 - Fixed game crash when libdbus is not available on Linux (the mod will be automatically disabled instead.)
