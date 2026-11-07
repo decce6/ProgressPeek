@@ -1,3 +1,7 @@
+## 1.2.2
+
+- Fixed errors at startup on Windows
+
 ## 1.2.1
 
 - Fixed a crash that might occur while loading level
